@@ -32,7 +32,7 @@ wait_for_mongod () {
 }
 
 configure_hw_acceleration () {
-    sed -i "s/^hardwareAccelerated = .*/hardwareAccelerated = true/" $1
+    sed -i "s/^hardwareAccelerated = .*/hardwareAccelerated = false/" $1
 }
 
 trap 'exit 0' SIGTERM
