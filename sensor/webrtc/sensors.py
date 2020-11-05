@@ -49,7 +49,7 @@ class SensorsHandler(web.RequestHandler):
             return self._room_details(sensor, name, room, stream)
 
         room=self._owt.create_room(name=name, p_limit=streaming_limit)
-        rtsp_url=r[0]["_source"]["url"]
+        rtsp_url=r[0]["_source"]["rtspuri"]
         stream=self._owt.start_streaming_ins(room=room,rtsp_url=rtsp_url,protocol=protocol) if room else None
         if not stream: return (503, "Exception when post")
 
