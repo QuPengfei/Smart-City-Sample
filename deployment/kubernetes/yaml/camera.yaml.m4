@@ -78,6 +78,13 @@ ifelse(defn(`SCENARIO_NAME'),`stadium',`dnl
             - name: PORT_STEP
               value: "defn(`CAMERA_PORT_STEP')"
 PLATFORM_NODE_SELECTOR(`Xeon')dnl
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+                  - key: "camera-zone"
+                    operator: In
+                    values:
+                      - "yes"
+')
+
 ')dnl
 
 ifelse(defn(`SCENARIO_NAME'),`stadium',`dnl
@@ -145,6 +152,13 @@ loop(`CAMERAIDX',1,defn(`NCAMERAS2'),`dnl
             - name: PORT_STEP
               value: "defn(`CAMERA_PORT_STEP')"
 PLATFORM_NODE_SELECTOR(`Xeon')dnl
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+                  - key: "camera-zone"
+                    operator: In
+                    values:
+                      - "yes"
+')
+
 ')dnl
 
 ---
@@ -211,6 +225,13 @@ loop(`CAMERAIDX',1,defn(`NCAMERAS3'),`dnl
             - name: PORT_STEP
               value: "defn(`CAMERA_PORT_STEP')"
 PLATFORM_NODE_SELECTOR(`Xeon')dnl
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+                  - key: "camera-zone"
+                    operator: In
+                    values:
+                      - "yes"
+')
+
 ')dnl
 ')dnl
 

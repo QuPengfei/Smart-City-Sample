@@ -40,8 +40,13 @@ spec:
               value: "defn(`OFFICE_LOCATION')"
             - name: DBHOST
               value: "http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200"
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+            - name: RTMP_HOST
+              value: "rtmp://defn(`OFFICE_NAME')-streaming-service:1935/sensors"')
             - name: SERVICE_INTERVAL
               value: "30"
+            - name: CAMERA_GATEWAY_ENABLE
+              value: "defn(`CAMERA_GATEWAY')"
             - name: NO_PROXY
               value: "*"
             - name: no_proxy
@@ -56,6 +61,13 @@ spec:
                 path: /etc/localtime
                 type: File
 PLATFORM_NODE_SELECTOR(`Xeon')dnl
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+                  - key: "camera-zone"
+                    operator: In
+                    values:
+                      - "yes"
+')
+
 
 ifelse(defn(`SCENARIO_NAME'),`stadium',`
 ---
@@ -91,8 +103,13 @@ spec:
               value: "defn(`OFFICE_LOCATION')"
             - name: DBHOST
               value: "http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200"
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+            - name: RTMP_HOST
+              value: "rtmp://defn(`OFFICE_NAME')-streaming-service:1935/sensors"')
             - name: SERVICE_INTERVAL
               value: "30"
+            - name: CAMERA_GATEWAY_ENABLE
+              value: "defn(`CAMERA_GATEWAY')"
             - name: NO_PROXY
               value: "*"
             - name: no_proxy
@@ -107,6 +124,13 @@ spec:
                 path: /etc/localtime
                 type: File
 PLATFORM_NODE_SELECTOR(`Xeon')dnl
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+                  - key: "camera-zone"
+                    operator: In
+                    values:
+                      - "yes"
+')
+
 
 ---
 
@@ -141,8 +165,13 @@ spec:
               value: "defn(`OFFICE_LOCATION')"
             - name: DBHOST
               value: "http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200"
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+            - name: RTMP_HOST
+              value: "rtmp://defn(`OFFICE_NAME')-streaming-service:1935/sensors"')
             - name: SERVICE_INTERVAL
               value: "30"
+            - name: CAMERA_GATEWAY_ENABLE
+              value: "defn(`CAMERA_GATEWAY')"
             - name: NO_PROXY
               value: "*"
             - name: no_proxy
@@ -157,6 +186,13 @@ spec:
                 path: /etc/localtime
                 type: File
 PLATFORM_NODE_SELECTOR(`Xeon')dnl
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+                  - key: "camera-zone"
+                    operator: In
+                    values:
+                      - "yes"
+')
+
 ')')
 
 ifelse(defn(`DISCOVER_IP_CAMERA'),`true',`dnl
@@ -189,8 +225,13 @@ spec:
               value: "defn(`OFFICE_LOCATION')"
             - name: DBHOST
               value: "http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200"
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+            - name: RTMP_HOST
+              value: "rtmp://defn(`OFFICE_NAME')-streaming-service:1935/sensors"')
             - name: SERVICE_INTERVAL
               value: "30"
+            - name: CAMERA_GATEWAY_ENABLE
+              value: "defn(`CAMERA_GATEWAY')"
             - name: NO_PROXY
               value: "*"
             - name: no_proxy
@@ -205,6 +246,13 @@ spec:
                 path: /etc/localtime
                 type: File
 PLATFORM_NODE_SELECTOR(`Xeon')dnl
+ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+                  - key: "camera-zone"
+                    operator: In
+                    values:
+                      - "yes"
+')
+
 ')
 
 ---

@@ -26,9 +26,10 @@ spec:
     spec:
       enableServiceLinks: false
 ifelse(defn(`DISCOVER_IP_CAMERA'),`true',`dnl
+ifelse(defn(`CAMERA_GATEWAY'),`disable',`
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-')dnl
+')')dnl
       containers:
         - name: defn(`OFFICE_NAME')-analytics-traffic
           image: defn(`REGISTRY_PREFIX')`smtc_analytics_object_'defn(`PLATFORM_SUFFIX')`_'defn(`FRAMEWORK'):latest
@@ -49,7 +50,9 @@ ifelse(defn(`DISCOVER_IP_CAMERA'),`true',`dnl
             - name: `NETWORK_PREFERENCE'
               value: "{\"defn(`PLATFORM_DEVICE')\":\"defn(`NETWORK_PREFERENCE')\"}"
             - name: GST_DEBUG
-              value: "3"
+              value: "*rtsp*:4,*rtmp*:4,*decodebin*:4,*demux*:4,*publish:6"
+            - name: CAMERA_GATEWAY_ENABLE
+              value: "defn(`CAMERA_GATEWAY')"
             - name: NO_PROXY
               value: "*"
             - name: no_proxy
@@ -101,9 +104,10 @@ spec:
     spec:
       enableServiceLinks: false
 ifelse(defn(`DISCOVER_IP_CAMERA'),`true',`dnl
+ifelse(defn(`CAMERA_GATEWAY'),`disable',`
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-')dnl
+')')dnl
       containers:
         - name: defn(`OFFICE_NAME')-analytics-entrance
           image: defn(`REGISTRY_PREFIX')`smtc_analytics_entrance_'defn(`PLATFORM_SUFFIX')`_'defn(`FRAMEWORK'):latest
@@ -123,6 +127,8 @@ ifelse(defn(`DISCOVER_IP_CAMERA'),`true',`dnl
               value: "defn(`SCENARIO_NAME')"
             - name: `NETWORK_PREFERENCE'
               value: "{\"defn(`PLATFORM_DEVICE')\":\"defn(`NETWORK_PREFERENCE')\"}"
+            - name: CAMERA_GATEWAY_ENABLE
+              value: "defn(`CAMERA_GATEWAY')"
             - name: NO_PROXY
               value: "*"
             - name: no_proxy
@@ -174,9 +180,10 @@ spec:
     spec:
       enableServiceLinks: false
 ifelse(defn(`DISCOVER_IP_CAMERA'),`true',`dnl
+ifelse(defn(`CAMERA_GATEWAY'),`disable',`
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-')dnl
+')')dnl
       containers:
         - name: defn(`OFFICE_NAME')-analytics-crowd
           image: defn(`REGISTRY_PREFIX')`smtc_analytics_crowd_'defn(`PLATFORM_SUFFIX')`_'defn(`FRAMEWORK'):latest
@@ -196,6 +203,8 @@ ifelse(defn(`DISCOVER_IP_CAMERA'),`true',`dnl
               value: "defn(`SCENARIO_NAME')"
             - name: `NETWORK_PREFERENCE'
               value: "{\"defn(`PLATFORM_DEVICE')\":\"defn(`NETWORK_PREFERENCE')\"}"
+            - name: CAMERA_GATEWAY_ENABLE
+              value: "defn(`CAMERA_GATEWAY')"
             - name: NO_PROXY
               value: "*"
             - name: no_proxy
@@ -247,9 +256,10 @@ spec:
     spec:
       enableServiceLinks: false
 ifelse(defn(`DISCOVER_IP_CAMERA'),`true',`dnl
+ifelse(defn(`CAMERA_GATEWAY'),`disable',`
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-')dnl
+')')dnl
       containers:
         - name: defn(`OFFICE_NAME')-analytics-svcq
           image: defn(`REGISTRY_PREFIX')`smtc_analytics_object_'defn(`PLATFORM_SUFFIX')`_'defn(`FRAMEWORK'):latest
@@ -269,6 +279,8 @@ ifelse(defn(`DISCOVER_IP_CAMERA'),`true',`dnl
               value: "defn(`SCENARIO_NAME')"
             - name: `NETWORK_PREFERENCE'
               value: "{\"defn(`PLATFORM_DEVICE')\":\"defn(`NETWORK_PREFERENCE')\"}"
+            - name: CAMERA_GATEWAY_ENABLE
+              value: "defn(`CAMERA_GATEWAY')"
             - name: NO_PROXY
               value: "*"
             - name: no_proxy
