@@ -4,6 +4,7 @@ from tornado import ioloop, web
 from tornado.options import define, options, parse_command_line
 from sensors import SensorsHandler
 from tokens import TokensHandler
+from rooms import RoomsHandler
 from subprocess import Popen
 from signal import signal, SIGTERM, SIGQUIT
 
@@ -17,6 +18,7 @@ def quit_service(signum, frame):
 app = web.Application([
     (r'/api/sensors',SensorsHandler),
     (r'/api/tokens',TokensHandler),
+    (r'/api/rooms',RoomsHandler),
 ])
 
 if __name__ == "__main__":
