@@ -101,6 +101,8 @@ spec:
             - name: DBHOST
               {{- $args := dict "officeName" $officeName "Values" $.Values }}
               value: {{ include "smtc.env.dbhost" $args | quote }}
+            - name: RTMP_HOST
+              value: "rtmp://{{ $officeName }}-streaming-service:1935/sensors"
             - name: WEBRTC_STREAMING_LIMIT
               value: "{{ $.Values.webrtc.streamingLimit }}"
             - name: WEBRTC_UDP_PORT

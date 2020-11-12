@@ -13,6 +13,7 @@ dbhost=env["DBHOST"]
 office=list(map(float,env["OFFICE"].split(",")))
 streaming_limit=int(env["WEBRTC_STREAMING_LIMIT"])
 webrtchost=env.get("WEBRTC_HOST",None)
+rtmp_host= env.get("RTMP_HOST",None)
 watcher=RoomWatcher()
 
 class SensorsHandler(web.RequestHandler):
@@ -25,42 +26,54 @@ class SensorsHandler(web.RequestHandler):
     def check_origin(self, origin):
         return True
 
-    def _room_details(self, sensor, name, room, stream):
+    def _room_details(self, sensor, name, room, stream_in, stream_out):
         details={
             "sensor": sensor,
             "name": name,
             "room": room,
-            "stream": stream,
+            "stream": stream_in,
         }
         if webrtchost:
-            details["url"]="{}?roomid={}&streamid={}&office={}".format(webrtchost,room,stream,quote(",".join(list(map(str,office)))))
+            details["url"]="{}?roomid={}&streamid={}&office={}".format(webrtchost,room,stream_in,quote(",".join(list(map(str,office)))))
         return details
 
+    def _streaming_out(self, sensor, room, stream_in):
+        rtmp_uri=rtmp_host+"/"+str(sensor)
+        stream=self._owt.start_streaming_outs(room=room,url=rtmp_uri,video_from=stream_in)
+        return (stream,rtmp_uri) if stream else (None,None)
+
+
     @run_on_executor
-    def _create_room(self, sensor):
-        r=list(self._db.search("_id='{}' and status='streaming'".format(sensor),size=1))
+    def _create_room(self, sensor, streaming_out):
+        r=list(self._db.search("_id='{}'".format(sensor),size=1))
         if not r: return (404, "Sensor Not Found")
 
         location=r[0]["_source"]["location"]
         protocol= "udp" if 'simsn' in  r[0]['_source'].keys() else "tcp"
         name="{},{} - {}".format(location["lat"],location["lon"], sensor)
-        room,stream=watcher.get(name)
-        if room and stream:
-            return self._room_details(sensor, name, room, stream)
+        room,stream_in,stream_out=watcher.get(name)
+        if room and stream_in:
+            return self._room_details(sensor, name, room, stream_in, stream_out)
 
         room=self._owt.create_room(name=name, p_limit=streaming_limit)
         rtsp_url=r[0]["_source"]["rtspuri"]
-        stream=self._owt.start_streaming_ins(room=room,rtsp_url=rtsp_url,protocol=protocol) if room else None
-        if not stream: return (503, "Exception when post")
+        stream_in=self._owt.start_streaming_ins(room=room,rtsp_url=rtsp_url,protocol=protocol) if room else None
+        if not stream_in: return (503, "Exception when post Streaming-ins")
 
-        watcher.set(name, room, stream)
-        return self._room_details(sensor, name, room, stream)
+        stream_out=None
+        if streaming_out == "enable":
+            stream_out,rtmp_uri=self._streaming_out(sensor,room,stream_in)
+            if not stream_out: return (503, "Exception when post Streaming-outs")
+
+        watcher.set(name, room, stream_in, stream_out)
+        return self._room_details(sensor, name, room, stream_in, stream_out)
 
     @gen.coroutine
     def post(self):
         sensor=unquote(self.get_argument("sensor"))
+        streaming_out=unquote(self.get_argument("streaming_out","disable"))
 
-        r=yield self._create_room(sensor)
+        r=yield self._create_room(sensor,streaming_out)
         if isinstance(r, dict):
             self.write(r)
         else:

@@ -16,14 +16,15 @@ class RoomWatcher(object):
         Thread(target=self._cleanup_thread).start()
 
     def get(self, name):
-        if name not in self._rooms: return (None,None)
-        return (self._rooms[name]["room"], self._rooms[name]["stream"])
+        if name not in self._rooms: return (None,None,None)
+        return (self._rooms[name]["room"], self._rooms[name]["stream_in"], self._rooms[name]["stream_out"])
 
-    def set(self, name, room, stream=None):
+    def set(self, name, room, stream_in=None, stream_out=None):
         if name in self._rooms: return
         self._rooms[name]={
             "room": room,
-            "stream": stream,
+            "stream_in": stream_in,
+            "stream_out": stream_out,
             "time": int(time.time()),
         }
 
@@ -40,11 +41,11 @@ class RoomWatcher(object):
                 print("Watcher: room {} participant {} inactive {}".format(name,participants,now-self._rooms[name]["time"]), flush=True)
                 if participants>0:
                     self._rooms[name]["time"]=now
-                elif now-self._rooms[name]["time"]>self._inactive:
+                elif now-self._rooms[name]["time"]>self._inactive and self._rooms[name]["stream_out"] == None:
                     todelete.append(name)
 
             for name in todelete:
-                stream1=self._rooms[name]["stream"]
+                stream1=self._rooms[name]["stream_in"]
                 room1=self._rooms[name]["room"]
 
                 try:

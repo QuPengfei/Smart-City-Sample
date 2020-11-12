@@ -55,6 +55,10 @@ spec:
               {{- $args := dict "officeName" $officeName "Values" $.Values }}
               value: {{ include "smtc.env.dbhost" $args | quote }}
 {{- if eq $cameraGateway "enable" }}
+            - name: WEBRTC_HOST
+              value: "http://{{ $officeName }}-webrtc-service:8888"
+            - name: STREAMING_FROM
+              value: {{ $.Values.cameraStreamingFrom }}
             - name: RTMP_HOST
               value:  "rtmp://{{ $officeName }}-streaming-service:1935/sensors"
 {{- end }}
@@ -119,6 +123,10 @@ spec:
               {{- $args := dict "officeName" $officeName "Values" $.Values }}
               value: {{ include "smtc.env.dbhost" $args | quote }}
 {{- if eq $cameraGateway "enable" }}
+            - name: WEBRTC_HOST
+              value: "http://{{ $officeName }}-webrtc-service:8888"
+            - name: STREAMING_FROM
+              value: {{ $.Values.cameraStreamingFrom }}
             - name: RTMP_HOST
               value:  "rtmp://{{ $officeName }}-streaming-service:1935/sensors"
 {{- end }}
@@ -180,6 +188,10 @@ spec:
               {{- $args := dict "officeName" $officeName "Values" $.Values }}
               value: {{ include "smtc.env.dbhost" $args | quote }}
 {{- if eq $cameraGateway "enable" }}
+            - name: WEBRTC_HOST
+              value: "http://{{ $officeName }}-webrtc-service:8888"
+            - name: STREAMING_FROM
+              value: {{ $.Values.cameraStreamingFrom }}
             - name: RTMP_HOST
               value:  "rtmp://{{ $officeName }}-streaming-service:1935/sensors"
 {{- end }}
@@ -248,6 +260,10 @@ spec:
               {{- $args := dict "officeName" $officeName "Values" $.Values }}
               value: {{ include "smtc.env.dbhost" $args | quote }}
 {{- if eq $cameraGateway "enable" }}
+            - name: WEBRTC_HOST
+              value: "http://{{ $officeName }}-webrtc-service:8888"
+            - name: STREAMING_FROM
+              value: {{ $.Values.cameraStreamingFrom }}
             - name: RTMP_HOST
               value:  "rtmp://{{ $officeName }}-streaming-service:1935/sensors"
 {{- end }}

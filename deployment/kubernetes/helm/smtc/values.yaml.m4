@@ -65,6 +65,7 @@ cameraRTSPPort:   17000
 cameraRTPPort:    27000
 cameraPortStep:   10
 discoverIPCamera: false
+cameraStreamingFrom: "webrtc"
 
 # optional: provide Linux user id & group permissioned to access cloud storage
 # userID is obtained using command: `$ id -u`
@@ -72,7 +73,7 @@ discoverIPCamera: false
 userId: defn(`USERID')
 groupId: defn(`GROUPID')
 
-# optional: build scope: one of "", "cloud", or "officeN", or "cameraN"
+# optional: build scope: one of "", "cloud", or "officeN", or "officeN-svc", or "officeN-camera", or "cameraN"
 buildScope: ""
 
 # optional: specify connector hosts if they are from different Kubernetes clusters.

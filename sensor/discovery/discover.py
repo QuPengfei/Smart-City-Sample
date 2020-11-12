@@ -21,7 +21,7 @@ service_interval = float(env.get("SERVICE_INTERVAL","30"))
 office = list(map(float,env["OFFICE"].split(","))) if "OFFICE" in env else None
 dbhost= env.get("DBHOST",None)
 camera_gateway = env["CAMERA_GATEWAY_ENABLE"]
-rtmp_host= env.get("RTMP_HOST",None)
+streaming_from=env.get("STREAMING_FROM","ffmpeg") # ffmpeg or webrtc
 sim_cameras={}
 
 def quit_service(signum, sigframe):
@@ -193,9 +193,8 @@ while True:
                         r=list(dbs.search("rtspuri='{}'".format(rtspuri),size=1))
                         if r:
                             sensor=r[0]["_id"]
-                            rtmpuri=rtmp_host+"/"+str(sensor)
                             # rtsp -> rtmp
-                            streamer.set(sensor,rtspuri,rtmpuri,simulation)
+                            rtmpuri=streamer.set(sensor,rtspuri,simulation,streaming_from)
                             # update the url
                             sinfo.update({"url":rtmpuri})
                             dbs.update(sensor,sinfo)
