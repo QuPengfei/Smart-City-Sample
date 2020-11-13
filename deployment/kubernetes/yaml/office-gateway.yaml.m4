@@ -17,6 +17,10 @@ spec:
   ports:
   - port: 8080
     protocol: TCP
+    name: http
+  - port: 1935
+    protocol: TCP
+    name: rtmp
   selector:
     app: defn(`OFFICE_NAME')-gateway
 
@@ -45,6 +49,7 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
+            - containerPort: 1935
           env:
             - name: OFFICE
               value: "defn(`OFFICE_LOCATION')"
@@ -54,6 +59,8 @@ spec:
               value: "http://defn(`OFFICE_NAME')-storage-service:8080"
             - name: WEBRTCHOST
               value: "http://defn(`OFFICE_NAME')-webrtc-service:8888"
+            - name: RTMPHOST
+              value: "rtmp://defn(`OFFICE_NAME')-streaming-service:1935"
             - name: NO_PROXY
               value: "*"
             - name: no_proxy

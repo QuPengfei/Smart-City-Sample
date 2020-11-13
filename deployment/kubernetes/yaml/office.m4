@@ -8,3 +8,4 @@ define(`DISCOVER_SIMULATED_CAMERA',`true')dnl
 define(`WEBRTC_UDP_PORT',10000)dnl
 define(`WEBRTC_STREAMING_LIMIT',10)dnl
 define(`CAMERA_GATEWAY',`disable')dnl
+define(`CAMERA_STREAMING_FROM',`ffmpeg')dnl

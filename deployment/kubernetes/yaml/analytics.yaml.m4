@@ -49,8 +49,6 @@ ifelse(defn(`CAMERA_GATEWAY'),`disable',`
               value: "defn(`SCENARIO_NAME')"
             - name: `NETWORK_PREFERENCE'
               value: "{\"defn(`PLATFORM_DEVICE')\":\"defn(`NETWORK_PREFERENCE')\"}"
-            - name: GST_DEBUG
-              value: "*rtsp*:4,*rtmp*:4,*decodebin*:4,*demux*:4,*publish:6"
             - name: CAMERA_GATEWAY_ENABLE
               value: "defn(`CAMERA_GATEWAY')"
             - name: NO_PROXY

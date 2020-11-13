@@ -39,8 +39,14 @@ spec:
             - name: OFFICE
               value: "defn(`OFFICE_LOCATION')"
             - name: DBHOST
-              value: "http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200"
+              value: ifelse(defn(`CAMERA_GATEWAY'),`enable',"http://defn(`OFFICE_NAME')-gateway-service:8080/offices","http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200")
 ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+            - name: WEBRTC_HOST
+              value: "http://defn(`OFFICE_NAME')-gateway-service:8080/offices"
+            - name: STREAMING_FROM
+              value: "defn(`CAMERA_STREAMING_FROM')"
+            - name: GW_RTMP_HOST
+              value: "rtmp://defn(`OFFICE_NAME')-gateway-service:1935/sensors"
             - name: RTMP_HOST
               value: "rtmp://defn(`OFFICE_NAME')-streaming-service:1935/sensors"')
             - name: SERVICE_INTERVAL
@@ -102,8 +108,14 @@ spec:
             - name: OFFICE
               value: "defn(`OFFICE_LOCATION')"
             - name: DBHOST
-              value: "http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200"
+              value: ifelse(defn(`CAMERA_GATEWAY'),`enable',"http://defn(`OFFICE_NAME')-gateway-service:8080/offices","http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200")
 ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+            - name: WEBRTC_HOST
+              value: "http://defn(`OFFICE_NAME')-gateway-service:8080/offices"
+            - name: STREAMING_FROM
+              value: "defn(`CAMERA_STREAMING_FROM')"
+            - name: GW_RTMP_HOST
+              value: "rtmp://defn(`OFFICE_NAME')-gateway-service:1935/sensors"
             - name: RTMP_HOST
               value: "rtmp://defn(`OFFICE_NAME')-streaming-service:1935/sensors"')
             - name: SERVICE_INTERVAL
@@ -164,8 +176,14 @@ spec:
             - name: OFFICE
               value: "defn(`OFFICE_LOCATION')"
             - name: DBHOST
-              value: "http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200"
+              value: ifelse(defn(`CAMERA_GATEWAY'),`enable',"http://defn(`OFFICE_NAME')-gateway-service:8080/offices","http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200")
 ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+            - name: WEBRTC_HOST
+              value: "http://defn(`OFFICE_NAME')-gateway-service:8080/offices"
+            - name: STREAMING_FROM
+              value: "defn(`CAMERA_STREAMING_FROM')"
+            - name: GW_RTMP_HOST
+              value: "rtmp://defn(`OFFICE_NAME')-gateway-service:1935/sensors"
             - name: RTMP_HOST
               value: "rtmp://defn(`OFFICE_NAME')-streaming-service:1935/sensors"')
             - name: SERVICE_INTERVAL
@@ -224,8 +242,14 @@ spec:
             - name: OFFICE
               value: "defn(`OFFICE_LOCATION')"
             - name: DBHOST
-              value: "http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200"
+              value: ifelse(defn(`CAMERA_GATEWAY'),`enable',"http://defn(`OFFICE_NAME')-gateway-service:8080/offices","http://ifelse(defn(`NOFFICES'),1,db,defn(`OFFICE_NAME')-db)-service:9200")
 ifelse(defn(`CAMERA_GATEWAY'),`enable',`
+            - name: WEBRTC_HOST
+              value: "http://defn(`OFFICE_NAME')-gateway-service:8080/offices"
+            - name: STREAMING_FROM
+              value: "defn(`CAMERA_STREAMING_FROM')"
+            - name: GW_RTMP_HOST
+              value: "rtmp//defn(`OFFICE_NAME')-gateway-service:1935/sensors"
             - name: RTMP_HOST
               value: "rtmp://defn(`OFFICE_NAME')-streaming-service:1935/sensors"')
             - name: SERVICE_INTERVAL
