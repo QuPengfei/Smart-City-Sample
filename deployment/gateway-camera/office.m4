@@ -6,3 +6,4 @@ define(`CAMERA_PORT_STEP',10)dnl
 define(`DISCOVER_IP_CAMERA',`false')dnl
 define(`DISCOVER_SIMULATED_CAMERA',`true')dnl
 define(`CAMERA_GATEWAY',`enable')dnl
+define(`CAMERA_STREAMING_FROM',`ffmpeg')dnl
