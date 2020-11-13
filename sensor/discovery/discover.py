@@ -20,9 +20,16 @@ sim_prefix=env.get("SIM_PREFIX","")
 service_interval = float(env.get("SERVICE_INTERVAL","30"))
 office = list(map(float,env["OFFICE"].split(","))) if "OFFICE" in env else None
 dbhost= env.get("DBHOST",None)
+rtmp_host= env.get("RTMP_HOST",None)
 camera_gateway = env["CAMERA_GATEWAY_ENABLE"]
 streaming_from=env.get("STREAMING_FROM","ffmpeg") # ffmpeg or webrtc
 sim_cameras={}
+
+streamer=None
+if camera_gateway == "enable":
+    t=(str(office[0])+"c"+str(office[1])).replace(".",'d').replace("-",'n')
+    dbhost=dbhost+"/"+t+"/api/db"
+    streamer=Streamer(rtmp_host,streaming_from)
 
 def quit_service(signum, sigframe):
     exit(143)
@@ -111,8 +118,6 @@ for simh in sim_hosts:
     port_scan.append("-p "+simh[1]+" "+simh[0])
 
 scanner=Scanner()
-streamer=None
-if camera_gateway=="enable": streamer=Streamer()
 while True:
 
     options=port_scan
@@ -194,7 +199,7 @@ while True:
                         if r:
                             sensor=r[0]["_id"]
                             # rtsp -> rtmp
-                            rtmpuri=streamer.set(sensor,rtspuri,simulation,streaming_from)
+                            rtmpuri=streamer.set(sensor,rtspuri,simulation)
                             # update the url
                             sinfo.update({"url":rtmpuri})
                             dbs.update(sensor,sinfo)

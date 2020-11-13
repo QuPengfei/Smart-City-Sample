@@ -17,6 +17,10 @@ spec:
   ports:
   - port: 8080
     protocol: TCP
+    name: http
+  - port: 1935
+    protocol: TCP
+    name: rtmp
   selector:
     app: {{ $officeName }}-gateway
 
@@ -58,6 +62,8 @@ spec:
               value: "http://{{ $officeName }}-storage-service:8080"
             - name: WEBRTCHOST
               value: "http://{{ $officeName }}-webrtc-service:8888"
+            - name: RTMPHOST
+              value:  "rtmp://{{ $officeName }}-streaming-service:1935"
             - name: NO_PROXY
               value: "*"
             - name: no_proxy
